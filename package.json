@@ -1,0 +1,45 @@
+{
+  "name": "edu-server",
+  "version": "1.0.0",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "ts-node-dev --respawn src/app.ts",
+    "build": "tsc",
+    "init-db": "ts-node src/scripts/init-db.ts",
+    "setup-tables": "ts-node src/scripts/setup-tables.ts",
+    "setup": "npm run init-db && npm run setup-tables && npm run build",
+    "test-env": "ts-node src/scripts/test-env.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "koa": "^3.0.0",
+    "koa-bodyparser": "^4.4.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^13.0.1",
+    "koa-static": "^5.0.0",
+    "mysql2": "^3.14.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.24"
+  },
+  "devDependencies": {
+    "@eslint/json": "^0.12.0",
+    "@types/koa": "^2.15.0",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-logger": "^3.1.5",
+    "@types/koa-router": "^7.4.8",
+    "@types/koa-static": "^4.0.4",
+    "@types/node": "^22.15.30",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
+  }
+}
