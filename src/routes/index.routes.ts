@@ -2,6 +2,10 @@ import Router from 'koa-router'
 import Koa from 'koa'
 import { DefaultState, DefaultContext } from 'koa'
 import eduPortalRoutes from './eduPortal.routes'
+import userRoutes from './user.routes'
+import dictRoutes from './dict.routes'
+import recruitRoutes from './recruit.routes'
+import researchRoutes from './research.routes'
 
 // 使用与子路由一致的类型定义
 const router = new Router<DefaultState, DefaultContext>()
@@ -27,8 +31,20 @@ export default router
 
 // 导出需要数据库连接的API路由集合函数
 export const registerAPIRoutes = (app: Koa) => {
-  // 只注册门户网站路由
+  // 注册门户网站路由
   app.use(eduPortalRoutes.routes()).use(eduPortalRoutes.allowedMethods())
+
+  // 注册用户信息路由
+  app.use(userRoutes.routes()).use(userRoutes.allowedMethods())
+
+  // 注册字典信息路由
+  app.use(dictRoutes.routes()).use(dictRoutes.allowedMethods())
+
+  // 注册招聘信息路由
+  app.use(recruitRoutes.routes()).use(recruitRoutes.allowedMethods())
+
+  // 注册科研成果路由
+  app.use(researchRoutes.routes()).use(researchRoutes.allowedMethods())
 
   return app
 }
