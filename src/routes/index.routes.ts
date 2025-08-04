@@ -6,6 +6,10 @@ import userRoutes from './user.routes'
 import dictRoutes from './dict.routes'
 import recruitRoutes from './recruit.routes'
 import researchRoutes from './research.routes'
+import dynamicRoutes from './dynamic.routes'
+import instrumentRoutes from './instrument.routes'
+import noticeRoutes from './notice.routes'
+import toolRoutes from './tool.routes'
 
 // 使用与子路由一致的类型定义
 const router = new Router<DefaultState, DefaultContext>()
@@ -45,6 +49,18 @@ export const registerAPIRoutes = (app: Koa) => {
 
   // 注册科研成果路由
   app.use(researchRoutes.routes()).use(researchRoutes.allowedMethods())
+
+  // 注册动态信息路由
+  app.use(dynamicRoutes.routes()).use(dynamicRoutes.allowedMethods())
+
+  // 注册仪器信息路由
+  app.use(instrumentRoutes.routes()).use(instrumentRoutes.allowedMethods())
+
+  // 注册通知信息路由
+  app.use(noticeRoutes.routes()).use(noticeRoutes.allowedMethods())
+
+  // 注册科研工具路由
+  app.use(toolRoutes.routes()).use(toolRoutes.allowedMethods())
 
   return app
 }

@@ -158,6 +158,62 @@ export class LabProfileService {
   }
 
   /**
+   * 根据类型获取已发布的简介（门户网站专用）
+   * @param profileType 简介类型
+   * @returns 简介信息
+   */
+  async getPublishedProfileByType(profileType: string): Promise<ApiResponse<LabProfileResponse | null>> {
+    try {
+      // 构建查询SQL，只查询已发布的指定类型简介
+      const sql = `
+        SELECT 
+          lp.id, lp.profile_type, lp.title, lp.content, lp.content_en,
+          lp.publish_times, lp.updated_times
+        FROM 
+          lab_profile_infos lp
+        WHERE lp.profile_type = ? AND lp.publish_status = '1'
+        ORDER BY lp.publish_times DESC, lp.created_times DESC
+        LIMIT 1
+      `
+
+      // 执行查询
+      const profiles = await this.dataSource.query(sql, [profileType])
+
+      // 检查是否找到简介
+      if (!profiles || profiles.length === 0) {
+        return success(null, '暂无该类型的简介信息')
+      }
+
+      // 获取简介信息
+      const profile = profiles[0]
+
+      // 转换为门户网站格式（移除后台管理字段）
+      const result: LabProfileResponse = {
+        id: profile.id,
+        profileType: profile.profile_type,
+        title: profile.title,
+        content: profile.content,
+        contentEn: profile.content_en,
+        publishTimes: profile.publish_times ? formatDate(new Date(profile.publish_times)) : undefined,
+        publishUserId: undefined, // 门户网站不需要
+        publishUserName: undefined, // 门户网站不需要
+        createUserId: '', // 门户网站不需要
+        updateUserId: '', // 门户网站不需要
+        createUserName: '', // 门户网站不需要
+        updateUserName: '', // 门户网站不需要
+        publishStatus: '1', // 固定为已发布
+        createdTimes: '', // 门户网站不需要
+        updatedTimes: profile.updated_times ? formatDate(new Date(profile.updated_times)) : ''
+      }
+
+      return success(result, '获取简介信息成功')
+    } catch (error: any) {
+      console.error('根据类型获取简介失败:', error)
+      return errors.serverError<LabProfileResponse | null>(error.message || '根据类型获取简介失败')
+    }
+  }
+
+  /**
    * 获取实验室简介详情
    * @param id 简介ID
    * @returns 简介详情
@@ -371,7 +427,7 @@ export class LabProfileService {
           // 删除简介
           await this.dataSource.getRepository(LabProfile).delete(id)
           successCount++
-        } catch (err) {
+        } catch {
           failCount++
         }
       }
