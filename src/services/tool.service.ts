@@ -43,6 +43,18 @@ export class ToolService {
         queryParams.push(params.toolType)
       }
 
+      // 发布年份筛选
+      if (params.publishYear) {
+        whereConditions.push('YEAR(publish_times) = ?')
+        queryParams.push(params.publishYear)
+      }
+
+      // 发布月份筛选
+      if (params.publishMonth) {
+        whereConditions.push('MONTH(publish_times) = ?')
+        queryParams.push(params.publishMonth)
+      }
+
       const whereClause = whereConditions.join(' AND ')
 
       // 获取总数

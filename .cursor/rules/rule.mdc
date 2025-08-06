@@ -4,4 +4,5 @@ globs:
 alwaysApply: false
 ---
 
+当前使用的操作系统为window
 无需生成更新文档、api 文档等内容

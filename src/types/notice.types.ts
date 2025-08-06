@@ -28,6 +28,8 @@ export interface NoticeQueryParams extends PaginationParams {
   title?: string; // 标题关键词
   noticeType?: string; // 通知类型: 2001(超链接), 2002(文本)
   importance?: string; // 重要程度: 3001(普通), 3002(重要), 3003(紧急)
+  publishYear?: number; // 发布年份
+  publishMonth?: number; // 发布月份（1-12）
 }
 
 // 分页查询参数

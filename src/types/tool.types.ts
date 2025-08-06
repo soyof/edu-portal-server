@@ -14,8 +14,10 @@ export interface ToolResponse {
 
 // 科研工具查询参数
 export interface ToolQueryParams extends PaginationParams {
-  title?: string; // 标题关键词
+  title?: string; // 工具标题关键词
   toolType?: string; // 工具类型
+  publishYear?: number; // 发布年份
+  publishMonth?: number; // 发布月份（1-12）
 }
 
 // 分页查询参数

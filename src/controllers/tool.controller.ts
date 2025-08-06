@@ -19,7 +19,9 @@ export class ToolController {
         pageNo: body.pageNo ? parseInt(body.pageNo) : 1,
         pageSize: body.pageSize ? parseInt(body.pageSize) : 10,
         title: body.title,
-        toolType: body.toolType
+        toolType: body.toolType,
+        publishYear: body.publishYear ? parseInt(body.publishYear) : undefined,
+        publishMonth: body.publishMonth ? parseInt(body.publishMonth) : undefined
       }
 
       // 参数验证
@@ -32,6 +34,20 @@ export class ToolController {
       if (params.pageSize && (params.pageSize < 1 || params.pageSize > 100)) {
         ctx.status = 200
         ctx.body = errors.validationError('每页数量必须在1-100之间')
+        return
+      }
+
+      // 发布月份验证
+      if (params.publishMonth && (params.publishMonth < 1 || params.publishMonth > 12)) {
+        ctx.status = 200
+        ctx.body = errors.validationError('发布月份必须在1-12之间')
+        return
+      }
+
+      // 发布年份验证（限制合理的年份范围）
+      if (params.publishYear && (params.publishYear < 1900 || params.publishYear > new Date().getFullYear() + 10)) {
+        ctx.status = 200
+        ctx.body = errors.validationError('发布年份必须在合理范围内')
         return
       }
 

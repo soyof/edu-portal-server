@@ -20,7 +20,9 @@ export class NoticeController {
         pageSize: body.pageSize ? parseInt(body.pageSize) : 10,
         title: body.title,
         noticeType: body.noticeType,
-        importance: body.importance
+        importance: body.importance,
+        publishYear: body.publishYear ? parseInt(body.publishYear) : undefined,
+        publishMonth: body.publishMonth ? parseInt(body.publishMonth) : undefined
       }
 
       // 参数验证
@@ -47,6 +49,20 @@ export class NoticeController {
       if (params.importance && !['3001', '3002', '3003'].includes(params.importance)) {
         ctx.status = 200
         ctx.body = errors.validationError('重要程度必须是3001(普通)、3002(重要)或3003(紧急)')
+        return
+      }
+
+      // 发布月份验证
+      if (params.publishMonth && (params.publishMonth < 1 || params.publishMonth > 12)) {
+        ctx.status = 200
+        ctx.body = errors.validationError('发布月份必须在1-12之间')
+        return
+      }
+
+      // 发布年份验证（可选：限制合理的年份范围）
+      if (params.publishYear && (params.publishYear < 1900 || params.publishYear > new Date().getFullYear() + 10)) {
+        ctx.status = 200
+        ctx.body = errors.validationError('发布年份必须在合理范围内')
         return
       }
 

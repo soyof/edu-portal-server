@@ -9,7 +9,6 @@ import researchRoutes from './research.routes'
 import dynamicRoutes from './dynamic.routes'
 import instrumentRoutes from './instrument.routes'
 import noticeRoutes from './notice.routes'
-import toolRoutes from './tool.routes'
 
 // 使用与子路由一致的类型定义
 const router = new Router<DefaultState, DefaultContext>()
@@ -58,9 +57,6 @@ export const registerAPIRoutes = (app: Koa) => {
 
   // 注册通知信息路由
   app.use(noticeRoutes.routes()).use(noticeRoutes.allowedMethods())
-
-  // 注册科研工具路由
-  app.use(toolRoutes.routes()).use(toolRoutes.allowedMethods())
 
   return app
 }

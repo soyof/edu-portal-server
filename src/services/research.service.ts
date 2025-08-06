@@ -25,7 +25,7 @@ export class ResearchService {
    */
   async getResearchOverview(): Promise<ApiResponse<ResearchOverviewResponse>> {
     try {
-      // 获取最新论文（前5条）
+      // 获取最新论文（前6条）
       const paperSql = `
         SELECT 
           id, title, title_en, abstract, abstract_en, 
@@ -33,10 +33,10 @@ export class ResearchService {
         FROM paper_infos 
         WHERE publish_status = '1' 
         ORDER BY paper_publish_times DESC, created_times DESC 
-        LIMIT 5
+        LIMIT 6
       `
 
-      // 获取最新专利（前5条）
+      // 获取最新专利（前6条）
       const patentSql = `
         SELECT 
           id, title, title_en, patent_publish_date, applicants, 
@@ -45,10 +45,10 @@ export class ResearchService {
         FROM patent_infos 
         WHERE publish_status = '1' 
         ORDER BY patent_publish_date DESC, created_times DESC 
-        LIMIT 5
+        LIMIT 6
       `
 
-      // 获取最新著作（前5条）
+      // 获取最新著作（前6条）
       const bookSql = `
         SELECT 
           id, title, title_en, author, author_en, 
@@ -57,7 +57,7 @@ export class ResearchService {
         FROM book_infos 
         WHERE publish_status = '1' 
         ORDER BY book_publish_date DESC, created_times DESC 
-        LIMIT 5
+        LIMIT 6
       `
 
       // 获取总数统计
