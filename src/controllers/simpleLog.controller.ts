@@ -5,7 +5,8 @@ import { SimpleLogRequest } from '../types/simpleLog.types'
 
 export class SimpleLogController {
   /**
-   * 记录简化埋点数据（门户网站专用，公开接口，每用户每天仅记录一次）
+   * 记录简化埋点数据（门户网站专用，公开接口）
+   * 仅保存用户ID、会话ID、事件类型、页面路径、页面标题、客户端IP地址
    * @param ctx Koa上下文
    */
   logSimpleEvent = async(ctx: Context): Promise<void> => {
@@ -88,6 +89,7 @@ export class SimpleLogController {
       /('|(\\)|;|--|\bor\b|\band\b|\bunion\b|\bselect\b|\binsert\b|\bdelete\b|\bupdate\b|\bdrop\b)/i
     ]
 
+    // 检查需要验证的字段（只保留必要字段）
     const textFields = [
       data.pagePath,
       data.pageTitle,
@@ -124,7 +126,7 @@ export class SimpleLogController {
       }
     }
 
-    // 检查字段长度限制
+    // 检查字段长度限制（只验证必要字段）
     const lengthChecks = [
       { field: data.pagePath, name: 'pagePath', maxLength: 255 },
       { field: data.pageTitle, name: 'pageTitle', maxLength: 255 },

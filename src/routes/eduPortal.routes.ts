@@ -3,7 +3,6 @@ import { DefaultState, DefaultContext } from 'koa'
 import labProfileController from '../controllers/labProfile.controller'
 import toolController from '../controllers/tool.controller'
 import ipController from '../controllers/ip.controller'
-import trackingController from '../controllers/tracking.controller'
 import simpleLogController from '../controllers/simpleLog.controller'
 
 // 门户网站路由 - 用于公开访问的接口

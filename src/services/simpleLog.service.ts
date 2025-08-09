@@ -46,9 +46,8 @@ export class SimpleLogService {
       const insertSql = `
         INSERT INTO event_tracking (
           user_id, session_id, event_type, page_path, page_title,
-          client_ip, browser_name, browser_version, browser_language,
-          os_name, os_version, event_timestamp, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          client_ip, event_timestamp, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `
 
       const insertParams = [
@@ -58,11 +57,6 @@ export class SimpleLogService {
         cleanedData.pagePath,
         cleanedData.pageTitle,
         cleanedData.clientIp,
-        cleanedData.browserName,
-        cleanedData.browserVersion,
-        cleanedData.browserLanguage,
-        cleanedData.osName,
-        cleanedData.osVersion,
         Date.now(), // 当前时间戳作为事件时间
         1 // 状态：有效
       ]
@@ -139,12 +133,7 @@ export class SimpleLogService {
       eventType: data.eventType.trim(),
       pagePath: data.pagePath.trim(),
       pageTitle: data.pageTitle?.trim() || null,
-      clientIp: clientIP,
-      browserName: data.browserInfo?.name?.trim() || null,
-      browserVersion: data.browserInfo?.version?.trim() || null,
-      browserLanguage: data.browserInfo?.language?.trim() || null,
-      osName: data.osInfo?.name?.trim() || null,
-      osVersion: data.osInfo?.version?.trim() || null
+      clientIp: clientIP
     }
   }
 
